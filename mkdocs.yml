@@ -1,0 +1,12 @@
+site_name: xr102232_test
+site_url: https://anand2532.github.io/xr102232_test/
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+
+nav:
+  - Home: index.md
+  - Getting Started: getting_started.md
+  - API: api.md
