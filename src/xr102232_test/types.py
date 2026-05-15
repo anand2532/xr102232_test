@@ -1,3 +1,5 @@
 """Shared type aliases."""
 
-type IntPair = tuple[int, int]
+from typing import TypeAlias
+
+IntPair: TypeAlias = tuple[int, int]

@@ -40,7 +40,5 @@ def test_divide():
 def test_divide_by_zero():
     from xr102232_test.core import divide
 
-    import pytest
-
     with pytest.raises(ZeroDivisionError):
         divide(1, 0)
