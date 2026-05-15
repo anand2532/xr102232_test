@@ -19,3 +19,9 @@ python -c "from xr102232_test import add; print(add(1, 2))"
 
 ## Contributing
 See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+## Development
+
+```bash
+pip install -e ".[dev]"
+pytest
+```
