@@ -20,3 +20,6 @@ Use Conventional Commits, for example:
 Run:
 - `pytest`
 - `ruff check .`
+
+## Code style
+Run `ruff check .` and `ruff format .` before pushing.
