@@ -18,3 +18,7 @@ def test_parse_int_ok():
 def test_parse_int_empty():
     with pytest.raises(ValueError):
         parse_int("   ")
+
+
+def test_subtract_negative():
+    assert subtract(0, 5) == -5
