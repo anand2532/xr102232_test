@@ -26,3 +26,10 @@ def parse_int(value: str) -> int:
 def is_even(n: int) -> bool:
     """Return True if n is even."""
     return n % 2 == 0
+
+
+def divide(a: int, b: int) -> float:
+    """Divide a by b."""
+    if b == 0:
+        raise ZeroDivisionError("division by zero")
+    return a / b

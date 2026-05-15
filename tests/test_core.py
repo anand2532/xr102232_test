@@ -29,3 +29,9 @@ def test_is_even():
 
     assert is_even(4)
     assert not is_even(3)
+
+
+def test_divide():
+    from xr102232_test.core import divide
+
+    assert divide(10, 2) == 5.0
