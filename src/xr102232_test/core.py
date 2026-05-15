@@ -21,3 +21,8 @@ def parse_int(value: str) -> int:
     if value == "":
         raise ValueError("empty string")
     return int(value)
+
+
+def is_even(n: int) -> bool:
+    """Return True if n is even."""
+    return n % 2 == 0

@@ -22,3 +22,10 @@ def test_parse_int_empty():
 
 def test_subtract_negative():
     assert subtract(0, 5) == -5
+
+
+def test_is_even():
+    from xr102232_test.core import is_even
+
+    assert is_even(4)
+    assert not is_even(3)
