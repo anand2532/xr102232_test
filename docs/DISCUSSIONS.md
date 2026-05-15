@@ -7,3 +7,4 @@ Suggested categories:
 - Ideas
 - Q&A
 - Show and tell
+# Community

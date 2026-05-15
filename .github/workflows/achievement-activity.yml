@@ -1,0 +1,153 @@
+name: Achievement activity (Quickdraw, YOLO, PRs)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/achievement-activity.yml"
+      - ".github/trigger-achievements"
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  quickdraw:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Quickdraw — open and close issue within 5 minutes
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issue = await github.rest.issues.create({
+              owner,
+              repo,
+              title: "chore: quickdraw verification issue",
+              body: "Automated issue for Quickdraw achievement. Closed immediately.",
+            });
+            await github.rest.issues.update({
+              owner,
+              repo,
+              issue_number: issue.data.number,
+              state: "closed",
+            });
+            core.info(`Quickdraw: closed issue #${issue.data.number}`);
+
+  yolo-and-prs:
+    runs-on: ubuntu-latest
+    needs: quickdraw
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: YOLO — PR merged without review
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { execSync } = require("child_process");
+            const { owner, repo } = context.repo;
+            execSync("git checkout -b yolo/no-review-merge");
+            const fs = require("fs");
+            fs.appendFileSync("docs/WIKI.md", "\n## YOLO\nMerged without review.\n");
+            execSync("git add docs/WIKI.md && git commit -m 'docs: yolo merge test'");
+            execSync("git push origin yolo/no-review-merge");
+            const pr = await github.rest.pulls.create({
+              owner, repo,
+              title: "docs: yolo merge without review",
+              head: "yolo/no-review-merge",
+              base: "main",
+              body: "YOLO achievement — no review before merge.",
+            });
+            await github.rest.pulls.merge({
+              owner, repo,
+              pull_number: pr.data.number,
+              merge_method: "merge",
+            });
+            core.info(`YOLO: merged PR #${pr.data.number}`);
+
+      - name: Feature PR 1 — multiply module
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const { execSync } = require("child_process");
+            const { owner, repo } = context.repo;
+            const branch = "feature/workflow-multiply";
+            execSync("git fetch origin main && git checkout -B " + branch + " origin/main");
+            fs.writeFileSync("src/xr102232_test/extras.py", "def multiply(a, b):\n    return a * b\n");
+            execSync("git add -A && git commit -m 'feat: add extras.multiply'");
+            execSync("git push -f origin " + branch);
+            const pr = await github.rest.pulls.create({ owner, repo, title: "feat: multiply", head: branch, base: "main", body: "PR 1" });
+            await github.rest.pulls.merge({ owner, repo, pull_number: pr.data.number, merge_method: "squash" });
+
+      - name: Feature PR 2 — clamp
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const { execSync } = require("child_process");
+            const { owner, repo } = context.repo;
+            const branch = "feature/workflow-clamp";
+            execSync("git fetch origin main && git checkout -B " + branch + " origin/main");
+            const p = "src/xr102232_test/extras.py";
+            const base = fs.existsSync(p) ? fs.readFileSync(p, "utf8") : "";
+            fs.writeFileSync(p, base + "\ndef clamp(v, lo, hi):\n    return max(lo, min(hi, v))\n");
+            execSync("git add -A && git commit -m 'feat: add extras.clamp'");
+            execSync("git push -f origin " + branch);
+            const pr = await github.rest.pulls.create({ owner, repo, title: "feat: clamp", head: branch, base: "main", body: "PR 2" });
+            await github.rest.pulls.merge({ owner, repo, pull_number: pr.data.number, merge_method: "squash" });
+
+      - name: Feature PR 3 — test
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const { execSync } = require("child_process");
+            const { owner, repo } = context.repo;
+            const branch = "fix/workflow-parse-tabs";
+            execSync("git fetch origin main && git checkout -B " + branch + " origin/main");
+            fs.appendFileSync("tests/test_core.py", "\n\ndef test_parse_int_tabs():\n    assert parse_int('\\t9\\t') == 9\n");
+            execSync("git add tests/test_core.py && git commit -m 'test: parse_int tabs'");
+            execSync("git push -f origin " + branch);
+            const pr = await github.rest.pulls.create({ owner, repo, title: "test: tabs", head: branch, base: "main", body: "PR 3" });
+            await github.rest.pulls.merge({ owner, repo, pull_number: pr.data.number, merge_method: "squash" });
+
+      - name: Feature PR 4 — docs
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const { execSync } = require("child_process");
+            const { owner, repo } = context.repo;
+            const branch = "docs/workflow-achievements-link";
+            execSync("git fetch origin main && git checkout -B " + branch + " origin/main");
+            fs.appendFileSync("README.md", "\n\nSee [ACHIEVEMENTS.md](ACHIEVEMENTS.md) for badge tracker.\n");
+            execSync("git add README.md && git commit -m 'docs: link achievements tracker'");
+            execSync("git push -f origin " + branch);
+            const pr = await github.rest.pulls.create({ owner, repo, title: "docs: achievements", head: branch, base: "main", body: "PR 4" });
+            await github.rest.pulls.merge({ owner, repo, pull_number: pr.data.number, merge_method: "squash" });
+
+      - name: Feature PR 5 — chore
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const { execSync } = require("child_process");
+            const { owner, repo } = context.repo;
+            const branch = "chore/workflow-funding-note";
+            execSync("git fetch origin main && git checkout -B " + branch + " origin/main");
+            fs.appendFileSync("CONTRIBUTING.md", "\n\n## Sponsorship\nSupport via GitHub Sponsors when available.\n");
+            execSync("git add CONTRIBUTING.md && git commit -m 'docs: sponsorship note'");
+            execSync("git push -f origin " + branch);
+            const pr = await github.rest.pulls.create({ owner, repo, title: "docs: sponsorship", head: branch, base: "main", body: "PR 5" });
+            await github.rest.pulls.merge({ owner, repo, pull_number: pr.data.number, merge_method: "squash" });
