@@ -3,8 +3,10 @@
 | Achievement | Difficulty | Steps required | Automatable | Est. time | Progress |
 |-------------|------------|----------------|-------------|-----------|----------|
 | Quickdraw | Easy | Close issue/PR within 5 min of opening | Partial (gh CLI / Actions) | 5 min | [x] |
-| YOLO | Easy | Merge PR without review | Partial (enable Actions PR setting) | 10 min | [ ] |
+| YOLO | Easy | Merge PR without review | Partial (`merge_pushed_prs.sh` or Actions) | 10 min | [ ] |
 | Pull Shark | Hard | 2+ merged PRs in repos you don't own | No (needs others) | Weeks+ | [ ] |
+
+**Branches ready to merge:** `feature/push-*`, `fix/push-readme`, `docs/push-api`, `chore/push-changelog`, `yolo/no-review-merge`
 | Pair Extraordinaire | Hard | Co-authored merged PRs | No (needs collaborator) | Weeks+ | [ ] |
 | Galaxy Brain | Hard | 2+ accepted discussion answers | No | Weeks+ | [ ] |
 | Starstruck | Very Hard | 16+ stars from other users | No | Months+ | [ ] |

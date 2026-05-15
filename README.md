@@ -19,6 +19,14 @@ python -c "from xr102232_test import add; print(add(1, 2))"
 
 ## Contributing
 See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+## GitHub achievements
+See [`ACHIEVEMENTS.md`](ACHIEVEMENTS.md) and one-time setup in [`docs/GITHUB_SETUP.md`](docs/GITHUB_SETUP.md).
+
+After `gh auth login`:
+```bash
+./scripts/merge_pushed_prs.sh   # YOLO + 5 PR merges
+```
 ## Development
 
 ```bash
