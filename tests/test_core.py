@@ -35,3 +35,12 @@ def test_divide():
     from xr102232_test.core import divide
 
     assert divide(10, 2) == 5.0
+
+
+def test_divide_by_zero():
+    from xr102232_test.core import divide
+
+    import pytest
+
+    with pytest.raises(ZeroDivisionError):
+        divide(1, 0)
