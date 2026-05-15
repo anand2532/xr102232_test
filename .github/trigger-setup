@@ -1,1 +1,1 @@
-trigger setup-repo workflow
+trigger setup-repo workflow (v2)

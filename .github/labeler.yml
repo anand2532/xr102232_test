@@ -1,0 +1,8 @@
+docs:
+  - changed-files:
+      - any-glob-to-any-file: 'docs/**'
+      - any-glob-to-any-file: '*.md'
+
+chore:
+  - changed-files:
+      - any-glob-to-any-file: '.github/**'
