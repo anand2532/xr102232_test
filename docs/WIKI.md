@@ -8,3 +8,6 @@ Suggested wiki pages:
 ## Roadmap
 - v0.2: divide helper
 - v0.3: CLI entrypoint
+
+## YOLO
+Merged without review.
